@@ -8,6 +8,7 @@ By pulling in the results from a CSV file we are able to loop through the data a
 
 In this section of code we pull in the CSV and create the text file we will be outputting the results to. 
 
+
 import csv
 import os
 
@@ -16,9 +17,13 @@ file_to_load = os.path.join("Resources", "election_results.csv")
 # Add a variable to save the file to a path.
 file_to_save = os.path.join("analysis", "election_analysis.txt")
 
+
 For the next part we will read the CSV, and utilize for loops and if statements to compile our data. The for loops will run through the data while the if statements are used to collect the votes and help determine the winners. 
 
-# Read the csv and convert it into a list of dictionaries
+
+
+
+ # Read the csv and convert it into a list of dictionaries
 with open(file_to_load) as election_data:
     reader = csv.reader(election_data)
 
@@ -62,53 +67,58 @@ with open(file_to_load) as election_data:
 
         # 5: Add a vote to that county's vote count.
         county_votes[county] +=1
+
+Once this is complete we will do similar steps to determine the candidate who won as well. 
         
    ###Final Steps    
     Our final steps are to determine the winners and output them to the text file we created.   
         
         # 7: Print the county with the largest turnout to the terminal.
-            winning_county_summary = (
-                    f"-------------------------\n"
-                    f"Winner: {winning_county}\n"
-                    f"Winning Vote Count: {winning_count:,}\n"
-                    f"Winning Percentage: {winning_percentage:.1f}%\n"
-                    f"-------------------------\n")
-            print(winning_county_summary)
+    winning_county_summary = (
+         f"-------------------------\n"
+         f"Largest County Turnout: {highest_turnout}\n"
+         f"Largest Vote Count: {highest_count:,}\n"
+         f"Winning Percentage: {highest_county_percentage:.1f}%\n"
+         f"-------------------------\n")
+                    
+    print(winning_county_summary)
 
                 # 8: Save the county with the largest turnout to a text file.
-            txt_file.write(winning_county_summary)
+    txt_file.write(winning_county_summary)
 
                 # Save the final candidate vote count to the text file.
-            for candidate_name in candidate_votes:
+    for candidate_name in candidate_votes:
 
-                    # Retrieve vote count and percentage
-                    votes = candidate_votes.get(candidate_name)
-                    vote_percentage = float(votes) / float(total_votes) * 100
-                    candidate_results = (
-                        f"{candidate_name}: {vote_percentage:.1f}% ({votes:,})\n")
+         # Retrieve vote count and percentage
+        votes = candidate_votes.get(candidate_name)
+        vote_percentage = float(votes) / float(total_votes) * 100
+        candidate_results = (f"{candidate_name}: {vote_percentage:.1f}% ({votes:,})\n")
 
-                    # Print each candidate's voter count and percentage to the
-                    # terminal.
-                    print(candidate_results)
-                    #  Save the candidate results to our text file.
-                    txt_file.write(candidate_results)
+     # Print each candidate's voter count and percentage to the
+     # terminal.
+    print(candidate_results)
+    #  Save the candidate results to our text file.
+    txt_file.write(candidate_results)
 
-                    # Determine winning vote count, winning percentage, and candidate.
-                    if (votes > winning_count) and (vote_percentage > winning_percentage):
-                        winning_count = votes
-                        winning_candidate = candidate_name
-                        winning_percentage = vote_percentage
+     # Determine winning vote count, winning percentage, and candidate.
+    if (votes > winning_count) and (vote_percentage > winning_percentage):
+     winning_count = votes
+     winning_candidate = candidate_name
+     winning_percentage = vote_percentage
 
                 # Print the winning candidate (to terminal)
-            winning_candidate_summary = (
-                    f"-------------------------\n"
-                    f"Winner: {winning_candidate}\n"
-                    f"Winning Vote Count: {winning_count:,}\n"
-                    f"Winning Percentage: {winning_percentage:.1f}%\n"
-                    f"-------------------------\n")
-            print(winning_candidate_summary)
+    winning_candidate_summary = (
+    f"-------------------------\n"
+    f"Winner: {winning_candidate}\n"
+    f"Winning Vote Count: {winning_count:,}\n"
+    f"Winning Percentage: {winning_percentage:.1f}%\n"
+     f"-------------------------\n")
+    print(winning_candidate_summary)
 
-                # Save the winning candidate's name to the text file   
+# Save the winning candidate's name to the text file
+    txt_file.write(winning_candidate_summary)
+    
+    
   ###Challenges
   There are many challenges in a program like this. When you pull data from the CSV you must be sure to open the file to allow the program to read through and collect data. Another challenge was correctly indenting the data so that the program reads the code correctly. 
   
